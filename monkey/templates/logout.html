@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Logout{% endblock %}
+{% block content %}
+
+    <div class="mdl-layout mdl-js-layout">
+ <div class="mdl-layout-icon"></div>
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout__title">Login Out ?</span>
+        <div class="mdl-layout-spacer"></div>
+
+    <form action="{{ url_for('login.logout') }}" method="post">
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+            Logout
+        </button>
+    </form>
+    </div>
+</div>
+
+{% endblock %}
+

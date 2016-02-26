@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block head %}
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='material/material.min.css') }}">
+
+        <script src="{{ url_for('static', filename='material/material.min.js') }}"></script>
+
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+
+        <!--suppress CssUnusedSymbol, CssNoGenericFontName -->
+        <style>
+            @font-face {
+                font-family: 'Material Icons';
+                font-style: normal;
+                font-weight: 400;
+                src: url({{ url_for('static', filename='material/iconfont/MaterialIcons-Regular.eot') }}); /* For IE6-8 */
+                src: local('Material Icons'),
+                local('MaterialIcons-Regular'),
+                url({{ url_for('static', filename='material/iconfont/MaterialIcons-Regular.woff2') }}) format('woff2'),
+                url({{ url_for('static', filename='material/iconfont/MaterialIcons-Regular.woff') }} ) format('woff'),
+                url({{ url_for('static', filename='material/iconfont/MaterialIcons-Regular.ttf') }}) format('truetype');
+            }
+
+            .material-icons {
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+            }
+
+            <!--
+            -->
+            .demo-layout-transparent {
+                background: url({{ url_for('static',filename='images/{0}'.format(background)) }}) center / cover;
+            }
+
+            .demo-layout-transparent .mdl-layout__header,
+            .demo-layout-transparent .mdl-layout__drawer-button {
+                /* This background is dark, so we set text to white. Use 87% black instead if
+                   your background is light. */
+                color: white;
+            }
+
+{#            .mdl-layout__header, .mdl-navigation__link#}
+{#            .mdl-layout__drawer-button {#}
+{#                color: rgba(63, 63, 63, 0.99);#}
+{#                background: transparent;#}
+{#            }#}
+
+{#            .mdl-layout__header-row .mdl-navigation__link {#}
+{#                color: black;#}
+{#            }#}
+
+{#            i.material-icons {#}
+{#                color: black;#}
+{#            }#}
+        </style>
+
+    {% endblock %}
+</head>
+<body>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    {% block sidenav %}
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title"> Title </span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation">
+                    <!-- mdl-layout--large-screen-only -->
+                    {% if current_user.is_anonymous == True %}
+                        <a class="mdl-navigation__link"
+                           href="{{ url_for('login.show') }}"
+                        >
+                            login
+                        </a>
+                    {% else %}
+                        <a class="mdl-navigation__link" href="{{ url_for('login.logout') }}">
+                            {{ current_user.name }}
+                        </a>
+                    {% endif %}
+                    {#        <a class="mdl-navigation__link" href="">Link 2</a>#}
+                    {#        <a class="mdl-navigation__link" href="">Link 3</a>#}
+                    {#        <a class="mdl-navigation__link" href="">Link 4</a>#}
+                </nav>
+            </div>
+        </header>
+    {% endblock %}
+    {% block topnav %}
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">  Title </span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="{{ url_for('index.show') }}">Home</a>
+                <a class="mdl-navigation__link" href="">Link 5</a>
+                <a class="mdl-navigation__link" href="">Link 6</a>
+                <a class="mdl-navigation__link" href="">Link 7</a>
+            </nav>
+        </div>
+    {% endblock %}
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+    <div id="footer">
+        {% block footer %}
+            <footer class="mdl-mini-footer mdl-mini-footer--transparent">
+                <div class="mdl-mini-footer__left-section">
+                    <div class="mdl-logo">Title</div>
+                    <ul class="mdl-mini-footer__link-list">
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Privacy & Terms</a></li>
+                    </ul>
+                </div>
+            </footer>
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
